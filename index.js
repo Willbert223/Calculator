@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
  
     equalsButton.addEventListener("click", function(event) {
        
-        if(!number1 || !number2 || !firstOperator){
+        if(!number1 || !firstOperator){
             return;
         }
 
@@ -73,6 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
         num2_parsed = parseFloat(number2);
 
         result = operate(firstOperator, num1_parsed, num2_parsed);
+
+        if (typeof result === 'string') {
+            display.value = result;
+        }
         if(Number.isInteger(result)) {
            display.value = result;
         } else {
@@ -80,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             display.value = result;
         }
         number1 = result;
+        firstOperator = null;
 
     })
         
