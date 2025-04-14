@@ -68,7 +68,13 @@ document.addEventListener('DOMContentLoaded', function() {
         number2 = display.value.slice(number1.length + 1)      
         num2_parsed = parseFloat(number2);
 
-        operate(firstOperator, num1_parsed, num2_parsed);
+        result = operate(firstOperator, num1_parsed, num2_parsed);
+        if(Number.isInteger(result)) {
+           display.value = result;
+        } else {
+            result = result.toFixed(2);
+            display.value = result;
+        }
 
 
     })
