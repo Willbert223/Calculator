@@ -97,6 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let i = 0; i < operator.length; i++) {
         operator[i].addEventListener("click", function(event) {
+          // if the last letter in the display is an operator do nothing
+          if (['+', '-', '*', '/'].includes(display.value.slice(-1))) {
+            return;
+        }
+        
+
           if (firstOperator !== null) {
             num1_parsed = parseFloat(number1);
             num2_parsed = parseFloat(display.value);
