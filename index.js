@@ -50,7 +50,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const input = document.querySelector("#keys");
     const operator = document.querySelectorAll(".operator-btn");
     const numberButtons = document.querySelectorAll(".number-btn");
-    
+    const equalsButton = document.querySelector('.equalsButton');
+    const clearButton = document.querySelector('.clear-btn')
+
+    clearButton.addEventListener("click", function(event) {
+        clearDisplay();
+    })
+ 
+    equalsButton.addEventListener("click", function(event) {
+        operate();
+    })
+        
+
     numberButtons.forEach(button => {
         button.addEventListener("click", function(event) {
             appendToDisplay(event.target.textContent);
