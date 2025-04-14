@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return number1 * number2
     }
     function divide (number1, number2) {
+        if (number2 === 0) {
+            return "Error: Can't divide by 0";
+        }
         return number1 / number2
+        
     }
     
     function operate (operator, number1, number2) {
@@ -50,15 +54,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const input = document.querySelector("#keys");
     const operator = document.querySelectorAll(".operator-btn");
     const numberButtons = document.querySelectorAll(".number-btn");
-    const equalsButton = document.querySelector('.equalsButton');
+    const equalsButton = document.querySelector('.equals-btn');
     const clearButton = document.querySelector('.clear-btn')
+    const decimal = document.querySelector('.decimal-btn')
 
     clearButton.addEventListener("click", function(event) {
         clearDisplay();
     })
  
     equalsButton.addEventListener("click", function(event) {
-        operate();
+       
+        num1_parsed = parseFloat(number1);
+        number2 = display.value.slice(number1.length + 1)      
+        num2_parsed = parseFloat(number2);
+
+        operate(firstOperator, num1_parsed, num2_parsed);
+
+
     })
         
 
@@ -70,9 +82,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     for (let i = 0; i < operator.length; i++) {
         operator[i].addEventListener("click", function(event) {
-            firstOperator = event.target.textContent;
-            number1 = display.value;
-            appendToDisplay(firstOperator);
+          if (firstOperator !== null) {
+            num1_parsed = parseFloat(number1);
+            num2_parsed = parseFloat(display.value);
+            result = operate(firstOperator, num1_parsed, num2_parsed);  // Perform the operation
+            display.value = result;  // Update display with the result
+            number1 = result;  // Store the result as the new first number
+          }
+
+          firstOperator = event.target.textContent;
+          number1 = display.value;
+          appendToDisplay(firstOperator);
+
         });
     }
     
@@ -82,3 +103,4 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
 
+  
