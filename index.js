@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
  
     equalsButton.addEventListener("click", function(event) {
        
+        if(!number1 || !number2 || !firstOperator){
+            return;
+        }
+
         num1_parsed = parseFloat(number1);
         number2 = display.value.slice(number1.length + 1)      
         num2_parsed = parseFloat(number2);
@@ -75,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
             result = result.toFixed(2);
             display.value = result;
         }
-
+        number1 = result;
 
     })
         
