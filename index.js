@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const numberButtons = document.querySelectorAll(".number-btn");
     const equalsButton = document.querySelector('.equals-btn');
     const clearButton = document.querySelector('.clear-btn')
-    const decimal = document.querySelector('.decimal-btn')
+    const decimalButton = document.querySelector('.decimal-btn')
 
     clearButton.addEventListener("click", function(event) {
         clearDisplay();
@@ -67,6 +67,14 @@ document.addEventListener('DOMContentLoaded', function() {
         secondOperator = null;
         result = null;
         shouldResetDisplay = false;
+    })
+
+    decimalButton.addEventListener("click", function(event) {
+        const currentValue = display.value;
+        const lastNumber = currentValue.split(/[\+\-\*\/]/).pop();
+        if (!lastNumber.includes('.')) {
+            appendToDisplay('.');
+        }
     })
  
     equalsButton.addEventListener("click", function(event) {
