@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const equalsButton = document.querySelector('.equals-btn');
     const clearButton = document.querySelector('.clear-btn')
     const decimalButton = document.querySelector('.decimal-btn')
+    const backspaceButton = document.querySelector('.backspace-btn');
+
 
     clearButton.addEventListener("click", function(event) {
         clearDisplay();
@@ -167,6 +169,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    backspaceButton.addEventListener("click", function() {
+        if (display.value === "Error: Can't divide by 0" || display.value === "Nice try. Can't divide by 0 😎") {
+            clearDisplay();
+            return;
+        }
+    
+        // Only clear if the display should be reset (after equals)
+        if (shouldResetDisplay) {
+            clearDisplay();
+            shouldResetDisplay = false;
+            return;
+        }
+        const lastChar = display.value.slice(-1);
+        display.value = display.value.slice(0, -1);
+
+          // If last character was an operator, clear firstOperator
+    if (['+', '-', '*', '/'].includes(lastChar)) {
+        firstOperator = null;}
+    });
+    
     
     
     }
