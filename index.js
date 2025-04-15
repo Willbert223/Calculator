@@ -190,6 +190,39 @@ document.addEventListener('DOMContentLoaded', function() {
         firstOperator = null;}
     });
     
+    document.addEventListener('keydown', function(event) {
+        const key = event.key;
+    
+        // Allow numbers
+        if (!isNaN(key)) {
+            document.querySelector(`.number-btn[data-key="${key}"]`)?.click();
+        }
+    
+        // Allow operators
+        if (['+', '-', '*', '/'].includes(key)) {
+            document.querySelector(`.operator-btn[data-key="${key}"]`)?.click();
+        }
+    
+        // Allow decimal
+        if (key === '.') {
+            document.querySelector('.decimal-btn')?.click();
+        }
+    
+        // Allow Enter or = for equals
+        if (key === 'Enter' || key === '=') {
+            document.querySelector('.equals-btn')?.click();
+        }
+    
+        // Allow Backspace
+        if (key === 'Backspace') {
+            document.querySelector('.backspace-btn')?.click();
+        }
+    
+        // Allow Escape or 'c' to clear
+        if (key === 'Escape' || key.toLowerCase() === 'c') {
+            document.querySelector('.clear-btn')?.click();
+        }
+    });
     
     
     }
