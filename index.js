@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function listener () {
     
-    const input = document.querySelector("#keys");
+  
     const operator = document.querySelectorAll(".operator-btn");
     const numberButtons = document.querySelectorAll(".number-btn");
     const equalsButton = document.querySelector('.equals-btn');
@@ -82,9 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if(!number1 || !firstOperator){
             return;
         }
-
+       
+        number2 = display.value.slice(number1.length + 1)   
         num1_parsed = parseFloat(number1);
-        number2 = display.value.slice(number1.length + 1)      
+   
         num2_parsed = parseFloat(number2);
 
         result = operate(firstOperator, num1_parsed, num2_parsed);
@@ -124,25 +125,34 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Prevent double operators (e.g., "7++")
-        if (['+', '-', '*', '/'].includes(display.value.slice(-1))) {
-            display.value = display.value.slice(0, -1) + currentOperator;
-            firstOperator = currentOperator;
-            return;
+      
+
+
+        if (firstOperator !== null && !shouldResetDisplay) {
+            number2 = display.value.slice(number1.length + 1);
+            if (number2 === '') return;
+    
+            let num1_parsed = parseFloat(number1);
+            let num2_parsed = parseFloat(number2);
+            result = operate(firstOperator, num1_parsed, num2_parsed);
+    
+            if (typeof result === 'string') {
+                display.value = result;
+                firstOperator = null;
+                number1 = '';
+                shouldResetDisplay = true;
+                return;
+            }
+    
+            result = Number.isInteger(result) ? result : result.toFixed(2);
+            display.value = result;
+            number1 = result;
+          } else {
+            number1 = display.value;
         }
-
-
-          if (firstOperator !== null) {
-            num1_parsed = parseFloat(number1);
-            num2_parsed = parseFloat(display.value);
-            result = operate(firstOperator, num1_parsed, num2_parsed);  // Perform the operation
-            display.value = result;  // Update display with the result
-            number1 = result;  // Store the result as the new first number
-          }
-
-          firstOperator = event.target.textContent;
-          number1 = display.value;
-          appendToDisplay(firstOperator);
+        firstOperator = event.target.textContent;
+        appendToDisplay(firstOperator);
+        shouldResetDisplay = false;
           
 
         });
