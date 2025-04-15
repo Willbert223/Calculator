@@ -99,9 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
     numberButtons.forEach(button => {
         button.addEventListener("click", function(event) {
             if (shouldResetDisplay) {
-                display.value = '';
-                
-            }         
+                // If the last character is an operator, don’t clear display
+                if (!['+', '-', '*', '/'].includes(display.value.slice(-1))) {
+                    display.value = '';
+                }
+                shouldResetDisplay = false;
+            }    
             appendToDisplay(event.target.textContent);
         });
     });
