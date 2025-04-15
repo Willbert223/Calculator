@@ -118,45 +118,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    for (let i = 0; i < operator.length; i++) {
-        operator[i].addEventListener("click", function(event) {
-          // if the last letter in the display is an operator do nothing
-          if (['+', '-', '*', '/'].includes(display.value.slice(-1))) {
-            return;
-        }
-        
-      
-
-
-        if (firstOperator !== null && !shouldResetDisplay) {
-            number2 = display.value.slice(number1.length + 1);
-            if (number2 === '') return;
+    operator.forEach(button => {
+        button.addEventListener("click", function(event) {
+            const operatorValue = event.target.textContent;
     
-            let num1_parsed = parseFloat(number1);
-            let num2_parsed = parseFloat(number2);
-            result = operate(firstOperator, num1_parsed, num2_parsed);
-    
-            if (typeof result === 'string') {
-                display.value = result;
-                firstOperator = null;
-                number1 = '';
-                shouldResetDisplay = true;
+            // Prevent entering two operators in a row
+            if (['+', '-', '*', '/'].includes(display.value.slice(-1))) {
                 return;
             }
     
-            result = Number.isInteger(result) ? result : result.toFixed(2);
-            display.value = result;
-            number1 = result;
-          } else {
-            number1 = display.value;
-        }
-        firstOperator = event.target.textContent;
-        appendToDisplay(firstOperator);
-        shouldResetDisplay = false;
-          
-
+            // If there is a result from previous operation and we're starting a new one
+            if (shouldResetDisplay && result !== null) {
+                number1 = result.toString();
+                firstOperator = operatorValue;
+                display.value = number1 + firstOperator;
+                result = null;
+                shouldResetDisplay = false;
+                return;
+            }
+    
+            // If chaining (like 12 + 7 - 3)
+            if (firstOperator !== null && !shouldResetDisplay) {
+                number2 = display.value.slice(number1.length + 1);
+                if (number2 === '') return;
+    
+                let num1_parsed = parseFloat(number1);
+                let num2_parsed = parseFloat(number2);
+                result = operate(firstOperator, num1_parsed, num2_parsed);
+    
+                if (typeof result === 'string') {
+                    display.value = result;
+                    number1 = '';
+                    firstOperator = null;
+                    shouldResetDisplay = true;
+                    return;
+                }
+    
+                result = Number.isInteger(result) ? result : result.toFixed(2);
+                display.value = result + operatorValue;
+                number1 = result.toString();
+                firstOperator = operatorValue;
+                shouldResetDisplay = false;
+            } else {
+                // First time selecting an operator
+                number1 = display.value;
+                firstOperator = operatorValue;
+                appendToDisplay(operatorValue);
+            }
         });
-    }
+    });
+    
     
     }
     listener();
