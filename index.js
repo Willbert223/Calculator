@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let result = null;
     let displayValue = 0;
     let display = document.getElementById('display');
+    let shouldResetDisplay = false;
     
     
     function add (number1, number2) {
@@ -60,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     clearButton.addEventListener("click", function(event) {
         clearDisplay();
+        number1 = '';
+        number2 = '';
+        firstOperator = null;
+        secondOperator = null;
+        result = null;
+        shouldResetDisplay = false;
     })
  
     equalsButton.addEventListener("click", function(event) {
@@ -76,8 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (typeof result === 'string') {
             display.value = result;
-        }
-        if(Number.isInteger(result)) {
+        } else if(Number.isInteger(result)) {
            display.value = result;
         } else {
             result = result.toFixed(2);
@@ -85,12 +91,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         number1 = result;
         firstOperator = null;
+        shouldResetDisplay = true;
 
     })
         
 
     numberButtons.forEach(button => {
         button.addEventListener("click", function(event) {
+            if (shouldResetDisplay) {
+                display.value = '';
+                
+            }         
             appendToDisplay(event.target.textContent);
         });
     });
@@ -102,6 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Prevent double operators (e.g., "7++")
+        if (['+', '-', '*', '/'].includes(display.value.slice(-1))) {
+            display.value = display.value.slice(0, -1) + currentOperator;
+            firstOperator = currentOperator;
+            return;
+        }
+
 
           if (firstOperator !== null) {
             num1_parsed = parseFloat(number1);
@@ -114,12 +132,14 @@ document.addEventListener('DOMContentLoaded', function() {
           firstOperator = event.target.textContent;
           number1 = display.value;
           appendToDisplay(firstOperator);
+          
 
         });
     }
     
     }
     listener();
+    
     
   });
   
