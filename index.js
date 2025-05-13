@@ -27,10 +27,9 @@ function add(a, b) {
   }
  
  // store the varaibles for numbers and operators to click or type 
- const num1 = ''
- const operator = ''
- const num2 = ''
-
+ const num1 = Number('5')
+ const operator = '/'
+ const num2 = Number('6')
 // create function called operate that takes operator and two numbers
 function operate(operator, a, b) {
     if (operator === '+') {
@@ -49,4 +48,24 @@ function operate(operator, a, b) {
   }
   
   // log the result to console
-  console.log(operate());
+  console.log(operate(operator, num1, num2));
+  
+  // function that displays numbers from html when clicked
+  // store the number thats clicked
+  // Variable to store the number that's clicked
+let currentInput = "";
+
+// Function that displays numbers from HTML when clicked
+function handleNumberClick(event) {
+  const number = event.target.textContent;
+  currentInput += number;
+  console.log("Current Input:", currentInput); // You can update a display element instead
+}
+
+// Example usage:
+// Assuming you have buttons in HTML like <button class="number">1</button>
+const numberButtons = document.querySelectorAll(".btn number");
+
+numberButtons.forEach(button => {
+  button.addEventListener("click", handleNumberClick);
+});
