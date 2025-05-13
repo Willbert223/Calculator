@@ -50,8 +50,9 @@ function operate(operator, a, b) {
   // log the result to console
   console.log(operate(operator, num1, num2));
   
-  // function that displays numbers from html when clicked
+  // function that displays numbers from html when clicked in display box
   // store the number thats clicked
+
   // Variable to store the number that's clicked
 let currentInput = "";
 
@@ -59,12 +60,12 @@ let currentInput = "";
 function handleNumberClick(event) {
   const number = event.target.textContent;
   currentInput += number;
-  console.log("Current Input:", currentInput); // You can update a display element instead
+  document.getElementById("display").textContent = currentInput; // You can update a display element instead
 }
 
 // Example usage:
 // Assuming you have buttons in HTML like <button class="number">1</button>
-const numberButtons = document.querySelectorAll(".btn number");
+const numberButtons = document.querySelectorAll(".btnNumber");
 
 numberButtons.forEach(button => {
   button.addEventListener("click", handleNumberClick);
