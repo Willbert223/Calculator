@@ -26,6 +26,10 @@ function add(a, b) {
     return a ** b;
   }
  
+  function percentage(a, b) {
+    return (a * b) / 100;
+  }
+  
  // store the varaibles for numbers and operators to click or type 
  const num1 = Number('5')
  const operator = '/'
@@ -44,6 +48,8 @@ function operate(operator, a, b) {
       return divide(a, b);
     } else if (operator === '**') {
       return exponate(a, b);
+    }else if (operator === '%') {
+        return percentage(a, b);
     } else {
       return "Invalid operator";
     }
@@ -77,6 +83,7 @@ function updateDisplay(value) {
 function handleNumberClick(event) {
     const num = event.target.textContent;
   
+    // use that result as first number in next operation
     // If we're entering the second number, reset it
     if (isSecond) {
       secondNumber += num;  // Concatenate to second number
@@ -87,29 +94,44 @@ function handleNumberClick(event) {
     }
   }
   
+ 
 
 // --- Handle operator click ---
+// Handle operator click
+// Handle operator click
 function handleOperatorClick(event) {
-    // If no first number, return
+    const clickedOperator = event.target.textContent;
+
     if (firstNumber === '') return;
-  
-    // When an operator is clicked again, evaluate the current pair
-    if (secondNumber !== '') {
-      result = operate(currentOperator, firstNumber, secondNumber);
-      updateDisplay(result);
-      firstNumber = result.toString(); // Set result as firstNumber for next operation
-      secondNumber = ''; // Reset second number
-      currentOperator = event.target.textContent; // Set the new operator
-    } else {
-      // First operator clicked, just store it
-      currentOperator = event.target.textContent;
-      isSecond = true;
-      updateDisplay(`${firstNumber} ${currentOperator}`);
+
+    // If user clicks "*" twice, treat it as "**"
+    if (clickedOperator === '*' && currentOperator === '*') {
+        currentOperator = '**';
+        isSecond = true;
+        updateDisplay(`${firstNumber} **`);
+        return;
     }
-  }
+
+    // If second number exists, compute the result before setting the new operator
+    if (secondNumber !== '') {
+        result = operate(currentOperator, firstNumber, secondNumber);
+        updateDisplay(result);
+        firstNumber = result.toString();
+        secondNumber = '';
+    }
+
+    currentOperator = clickedOperator;
+    isSecond = true;
+    updateDisplay(`${firstNumber} ${currentOperator}`);
+}
+
+
+
+
+
   
   
-  
+
 
 // --- Handle equals ---
 function handleEqualsClick() {
@@ -123,6 +145,19 @@ function handleEqualsClick() {
     isSecond = false;
   }
 }
+
+function handlePercentClick() {
+    if (firstNumber !== '' && secondNumber !== '') {
+      result = operate('%', firstNumber, secondNumber); // Use percentage calculation
+      updateDisplay(result);
+      firstNumber = result.toString(); // Set result as firstNumber for next operation
+      secondNumber = ''; // Reset second number
+      currentOperator = ''; // Clear operator
+      isSecond = false;
+    }
+  }
+  
+ 
 
 // --- Handle clear ---
 function handleClearClick() {
@@ -156,8 +191,10 @@ function handleDeleteClick() {
   document.querySelector(".btnEquals").addEventListener("click", handleEqualsClick);
   document.querySelector(".btnClear").addEventListener("click", handleClearClick);
   document.querySelector(".btnDelete").addEventListener("click", handleDeleteClick);
+  document.querySelector(".btnPercent").addEventListener("click", handlePercentClick);
+
   
-// evalute first two numbers when you press operator second time.
-// update display with result of first operation.
-// use that result as first number in next operation
-// 
+// function that handles % click
+// handles clicking * operator twice
+
+
