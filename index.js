@@ -75,25 +75,41 @@ function updateDisplay(value) {
 
 // --- Handle number button click ---
 function handleNumberClick(event) {
-  const num = event.target.textContent;
-
-  if (!isSecond) {
-    firstNumber += num;
-    updateDisplay(firstNumber);
-  } else {
-    secondNumber += num;
-    updateDisplay(`${firstNumber} ${currentOperator} ${secondNumber}`);
+    const num = event.target.textContent;
+  
+    // If we're entering the second number, reset it
+    if (isSecond) {
+      secondNumber += num;  // Concatenate to second number
+      updateDisplay(`${firstNumber} ${currentOperator} ${secondNumber}`);
+    } else {
+      firstNumber += num;  // Concatenate to first number
+      updateDisplay(firstNumber);
+    }
   }
-}
+  
 
 // --- Handle operator click ---
 function handleOperatorClick(event) {
-  if (firstNumber === '') return;
-
-  currentOperator = event.target.textContent;
-  isSecond = true;
-  updateDisplay(`${firstNumber} ${currentOperator}`);
-}
+    // If no first number, return
+    if (firstNumber === '') return;
+  
+    // When an operator is clicked again, evaluate the current pair
+    if (secondNumber !== '') {
+      result = operate(currentOperator, firstNumber, secondNumber);
+      updateDisplay(result);
+      firstNumber = result.toString(); // Set result as firstNumber for next operation
+      secondNumber = ''; // Reset second number
+      currentOperator = event.target.textContent; // Set the new operator
+    } else {
+      // First operator clicked, just store it
+      currentOperator = event.target.textContent;
+      isSecond = true;
+      updateDisplay(`${firstNumber} ${currentOperator}`);
+    }
+  }
+  
+  
+  
 
 // --- Handle equals ---
 function handleEqualsClick() {
@@ -141,3 +157,7 @@ function handleDeleteClick() {
   document.querySelector(".btnClear").addEventListener("click", handleClearClick);
   document.querySelector(".btnDelete").addEventListener("click", handleDeleteClick);
   
+// evalute first two numbers when you press operator second time.
+// update display with result of first operation.
+// use that result as first number in next operation
+// 
