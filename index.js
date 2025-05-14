@@ -38,22 +38,32 @@ function add(a, b) {
 function operate(operator, a, b) {
     a = parseFloat(a);
     b = parseFloat(b);
+    let result;
+  
     if (operator === '+') {
-      return add(a, b);
+      result = add(a, b);
     } else if (operator === '-') {
-      return subtract(a, b);
+      result = subtract(a, b);
     } else if (operator === '*') {
-      return multiply(a, b);
+      result = multiply(a, b);
     } else if (operator === '/') {
-      return divide(a, b);
+      result = divide(a, b);
     } else if (operator === '**') {
-      return exponate(a, b);
-    }else if (operator === '%') {
-        return percentage(a, b);
+      result = exponate(a, b);
+    } else if (operator === '%') {
+      result = percentage(a, b);
     } else {
       return "Invalid operator";
     }
+  
+    // Round to 2 decimal places if it's a float
+    if (typeof result === "number" && !Number.isInteger(result)) {
+      result = parseFloat(result.toFixed(2));
+    }
+  
+    return result;
   }
+  
   
   // log the result to console
   console.log(operate(operator, num1, num2));
@@ -157,6 +167,20 @@ function handlePercentClick() {
     }
   }
   
+  function handleDecimalClick() {
+    if (!isSecond) {
+      if (!firstNumber.includes('.')) {
+        firstNumber += '.';
+        updateDisplay(firstNumber);
+      }
+    } else {
+      if (!secondNumber.includes('.')) {
+        secondNumber += '.';
+        updateDisplay(`${firstNumber} ${currentOperator} ${secondNumber}`);
+      }
+    }
+  }
+  
  
 
 // --- Handle clear ---
@@ -192,9 +216,14 @@ function handleDeleteClick() {
   document.querySelector(".btnClear").addEventListener("click", handleClearClick);
   document.querySelector(".btnDelete").addEventListener("click", handleDeleteClick);
   document.querySelector(".btnPercent").addEventListener("click", handlePercentClick);
+  document.querySelector(".btnDecimal").addEventListener("click", handleDecimalClick);
+
 
   
 // function that handles % click
+// function that handles decimal click
 // handles clicking * operator twice
+
+// round decimals 
 
 
