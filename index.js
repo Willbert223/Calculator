@@ -122,18 +122,33 @@ function handleOperatorClick(event) {
         return;
     }
 
-    // If second number exists, compute the result before setting the new operator
-    if (secondNumber !== '') {
-        result = operate(currentOperator, firstNumber, secondNumber);
-        updateDisplay(result);
-        firstNumber = result.toString();
-        secondNumber = '';
+    // Prevent accidental evaluation if second number hasn't been entered yet
+    if (isSecond && secondNumber === '') {
+        currentOperator = clickedOperator;
+        updateDisplay(`${firstNumber} ${currentOperator}`);
+        return;
     }
+
+    // Only compute if second number has been entered
+    // Only compute if a second number exists and user isn't just pressing operators repeatedly
+if (secondNumber !== '') {
+    result = operate(currentOperator, firstNumber, secondNumber);
+    updateDisplay(result);
+    firstNumber = result.toString();
+    secondNumber = '';
+} else if (isSecond) {
+    // Just replace the operator if second number isn't typed yet
+    currentOperator = clickedOperator;
+    updateDisplay(`${firstNumber} ${currentOperator}`);
+    return;
+}
+
 
     currentOperator = clickedOperator;
     isSecond = true;
     updateDisplay(`${firstNumber} ${currentOperator}`);
 }
+
 
 
 
