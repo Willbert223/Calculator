@@ -2,6 +2,7 @@ const numberButton = document.querySelectorAll('.btnNumber');
 const operatorButton = document.querySelectorAll('.btnOperator');
 const clearButton = document.querySelector('.btnClear');
 const deleteButton = document.querySelector('.btnDelete')
+const decimalButton = document.querySelector('.btnDecimal')
 const showResult = document.querySelector('.result');
 const currentOperand = document.querySelector('.current-operand');
 const previousOperand = document.querySelector('.previous-operand');
@@ -102,4 +103,10 @@ clearButton.addEventListener('click', function() {
   // reset operand value to 0
   currentOperand.textContent = '0';
   previousOperand.textContent = '';
+  result = '';
+})
+
+// function that listens for decimal click and rounds them
+decimalButton.addEventListener('click', function() {
+  
 })
