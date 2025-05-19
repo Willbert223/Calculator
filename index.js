@@ -5,7 +5,7 @@ const deleteButton = document.querySelector('.btnDelete')
 const showResult = document.querySelector('.result');
 const currentOperand = document.querySelector('.current-operand');
 const previousOperand = document.querySelector('.previous-operand');
-const equalsKey = document.querySelector('.equals-key');
+const equalsKey = document.querySelector('.btnEquals');
 
 currentOperand.textContent = '';
 previousOperand.textContent = '';
@@ -49,9 +49,9 @@ function operate (firstnum, secondnum, operator) {
 // store the numbers in a variable
 let storedNumber = '';
 // store the first num, operator, second num
-let firstnum = parseInt('');// converts string to integer
-let operator = '';
-let secondnum = parseInt('');
+let firstnum = '';
+let firstOperator = '';
+let secondnum = '';
 let result = '';
 currentOperand.textContent = 0;
 
@@ -65,3 +65,33 @@ numberButton.forEach((number) => {
   })
 })
 
+// function that listens for operator clicked
+operatorButton.forEach((operator) => {
+  operator.addEventListener('click', function() {
+
+    // store first number clicked
+    firstnum = storedNumber;
+   // store second number clicked
+   secondnum = result
+    // displays which operator i clicked
+    firstOperator = operator.textContent;
+    previousOperand.textContent = storedNumber + firstOperator;
+    // remove current operand from display
+    currentOperand.textContent = '';
+    storedNumber = '';
+  })
+})
+
+
+
+
+
+equalsKey.addEventListener('click', function() {
+  // when equals key is clicked call operate() function
+  result = operate(parseFloat(firstnum), parseFloat(storedNumber), firstOperator)
+  // display result of numbers pressed
+  currentOperand.textContent = result;
+  previousOperand.textContent = firstnum + ' ' + firstOperator + ' ' + storedNumber;
+  storedNumber = result;
+  
+})
