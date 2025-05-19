@@ -1,4 +1,14 @@
+const numberButton = document.querySelectorAll('.btnNumber');
+const operatorButton = document.querySelectorAll('.btnOperator');
+const clearButton = document.querySelector('.btnClear');
+const deleteButton = document.querySelector('.btnDelete')
+const showResult = document.querySelector('.result');
+const currentOperand = document.querySelector('.current-operand');
+const previousOperand = document.querySelector('.previous-operand');
+const equalsKey = document.querySelector('.equals-key');
 
+currentOperand.textContent = '';
+previousOperand.textContent = '';
 
 // add the first num, and second num
 function add(firstnum, secondnum) {
@@ -36,9 +46,22 @@ function operate (firstnum, secondnum, operator) {
  
 }
 
+// store the numbers in a variable
+let storedNumber = '';
 // store the first num, operator, second num
-let firstnum = parseInt('3');// converts string to integer
-let operator = '/';
-let secondnum = parseInt('3');
+let firstnum = parseInt('');// converts string to integer
+let operator = '';
+let secondnum = parseInt('');
+let result = '';
+currentOperand.textContent = 0;
 
-console.log(operate(firstnum, secondnum, operator))
+// function that populates numbers when clicked
+// for each button
+numberButton.forEach((number) => {
+  // listen for a click
+  number.addEventListener('click', function() {
+    storedNumber += number.value;
+    currentOperand.textContent = storedNumber;
+  })
+})
+
