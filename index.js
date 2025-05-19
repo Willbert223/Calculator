@@ -95,3 +95,11 @@ equalsKey.addEventListener('click', function() {
   storedNumber = result;
   
 })
+
+// function that listens for clear button
+// if the user presses c button
+clearButton.addEventListener('click', function() {
+  // reset operand value to 0
+  currentOperand.textContent = '0';
+  previousOperand.textContent = '';
+})
