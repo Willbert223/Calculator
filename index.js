@@ -4,12 +4,12 @@ const clearButton = document.querySelector('.btnClear');
 const deleteButton = document.querySelector('.btnDelete')
 const decimalButton = document.querySelector('.btnDecimal')
 const showResult = document.querySelector('.result');
-const currentOperand = document.querySelector('.current-operand');
-const previousOperand = document.querySelector('.previous-operand');
+const displayValue = document.querySelector('.display')
+const num1Display = document.querySelector('.firstnum')
+const num2Display = document.querySelector('.secondnum')
+const operatorDisplay = document.querySelector('.operator')
 const equalsKey = document.querySelector('.btnEquals');
 
-currentOperand.textContent = '';
-previousOperand.textContent = '';
 
 // add the first num, and second num
 function add(firstnum, secondnum) {
@@ -42,71 +42,81 @@ function operate (firstnum, secondnum, operator) {
     return multiply(firstnum, secondnum)
 // if operator is / return divide function
   case '/':
+    if (secondnum === 0) {
+      return "Error: Can't divide by 0"
+    }
     return divide(firstnum, secondnum)    
  }
  
 }
 
-// store the numbers in a variable
+// store the first value in a variable
 let storedNumber = '';
 // store the first num, operator, second num
 let firstnum = '';
 let firstOperator = '';
 let secondnum = '';
 let result = '';
-currentOperand.textContent = 0;
+let inputDisplay = ''
+displayValue.innerText = 0;
 
 // function that populates numbers when clicked
 // for each button
 numberButton.forEach((number) => {
-  // listen for a click
-  number.addEventListener('click', function() {
-    storedNumber += number.value;
-    currentOperand.textContent = storedNumber;
+  // listen for a click of the first number
+  number.addEventListener('click', (event) => {
+    const clickedNumber = event.target.value;
+   if (firstOperator === '' && secondnum === '') { 
+    firstnum = parseFloat(firstnum + clickedNumber);
+    inputDisplay = firstnum;
+    
+   } else {
+    secondnum = parseFloat(secondnum + clickedNumber);
+    console.log("secondNumber", secondnum);
+    inputDisplay = secondnum.toString();
+   }
+
+   /*if (firstnum !== '' && secondnum !== '') {
+    firstnum = firstOperator, firstnum, secondnum;
+    secondnum = '';
+    secondnum = (secondnum + clickedNumber)
+    inputDisplay = secondnum.toString();
+   }*/
+   display.innerText = inputDisplay;
   })
 })
 
 // function that listens for operator clicked
 operatorButton.forEach((operator) => {
-  operator.addEventListener('click', function() {
+  operator.addEventListener('click',  function(event) {
 
-    // store first number clicked
-    firstnum = storedNumber;
-   // store second number clicked
-   secondnum = result
-    // displays which operator i clicked
-    firstOperator = operator.textContent;
-    previousOperand.textContent = storedNumber + firstOperator;
-    // remove current operand from display
-    currentOperand.textContent = '';
-    storedNumber = '';
+    
+    // stores the operator pressed and displays it after first number
+    firstOperator = operator.innerText;
+    displayValue.innerText = firstnum + firstOperator;
+    console.log(firstOperator)
+    
+ 
   })
-})
-
-
-
-
-
-equalsKey.addEventListener('click', function() {
-  // when equals key is clicked call operate() function
-  result = operate(parseFloat(firstnum), parseFloat(storedNumber), firstOperator)
-  // display result of numbers pressed
-  currentOperand.textContent = result;
-  previousOperand.textContent = firstnum + ' ' + firstOperator + ' ' + storedNumber;
-  storedNumber = result;
   
 })
 
-// function that listens for clear button
-// if the user presses c button
-clearButton.addEventListener('click', function() {
-  // reset operand value to 0
-  currentOperand.textContent = '0';
-  previousOperand.textContent = '';
-  result = '';
-})
+// funtion that listens for equal button
+equalsKey.addEventListener('click', () => {
+  // display the value of added numbers.
+  
 
-// function that listens for decimal click and rounds them
-decimalButton.addEventListener('click', function() {
+  inputDisplay = operate(firstnum, secondnum, firstOperator)
+  displayValue.textContent = inputDisplay.toFixed(4);
+  //result = operate(firstnum, secondnum, firstOperator);
+  console.log(inputDisplay)
+  
+  
+
   
 })
+
+
+
+
+
