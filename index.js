@@ -45,8 +45,11 @@ function operate (firstnum, secondnum, operator) {
     if (secondnum === 0) {
       return "Error: Can't divide by 0"
     }
-    return divide(firstnum, secondnum)    
+    return divide(firstnum, secondnum) 
+
+    
  }
+
  
 }
 
@@ -106,9 +109,9 @@ equalsKey.addEventListener('click', () => {
   // display the value of added numbers.
   
 
-  inputDisplay = operate(firstnum, secondnum, firstOperator)
-  displayValue.textContent = inputDisplay.toFixed(4);
-  //result = operate(firstnum, secondnum, firstOperator);
+  inputDisplay = operate(firstnum, secondnum, firstOperator)// did not work because the order was wrong. 
+  displayValue.textContent = inputDisplay.toFixed(2);
+  result = operate(firstnum, secondnum, firstOperator);
   console.log(inputDisplay)
   
   
@@ -116,6 +119,26 @@ equalsKey.addEventListener('click', () => {
   
 })
 
+// function that listens for clear button click
+
+clearButton.addEventListener('click',  (event) => {
+  // removes number from display not. They are still stored inside of console.
+  firstnum = '';
+  secondnum = '';
+  firstOperator = '';
+  displayValue.innerText = '0';
+})
+// function that listens for delete button 
+
+deleteButton.addEventListener('click', () => {
+   if (!secondnum) {
+    firstnum = firstnum.toString().slice(0, -1);
+    displayValue.textContent = (firstnum || '0')
+   } else {
+    secondnum = secondnum.toString().slice(0, -1)
+    displayValue.textContent = (secondnum || '0')
+   }
+})
 
 
 
