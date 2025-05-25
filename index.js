@@ -141,5 +141,21 @@ deleteButton.addEventListener('click', () => {
 })
 
 
+// fucntion that listens for decimal click allowing only one to appear
+
+decimalButton.addEventListener('click', () => {
+  if (!secondnum) {
+    if (!firstnum.toString().includes('.')) {
+      firstnum += '.';
+      displayValue.textContent = (firstnum + firstOperator);
+    }
+  } else {
+    if (!secondnum.toString().includes('.')) {
+      secondnum += '.';
+      displayValue.textContent = (`${firstnum} ${firstOperator} ${secondnum}`);
+    }
+  }
+})
+
 
 
