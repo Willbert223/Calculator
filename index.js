@@ -53,6 +53,8 @@ function operate (firstnum, secondnum, operator) {
  
 }
 
+
+
 // store the first value in a variable
 let storedNumber = '';
 // store the first num, operator, second num
@@ -110,7 +112,7 @@ equalsKey.addEventListener('click', () => {
   
 
   inputDisplay = operate(firstnum, secondnum, firstOperator)// did not work because the order was wrong. 
-  displayValue.textContent = inputDisplay.toFixed(2);
+  displayValue.textContent = parseFloat(inputDisplay.toFixed(2));
   result = operate(firstnum, secondnum, firstOperator);
   console.log(inputDisplay)
   
