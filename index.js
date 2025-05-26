@@ -9,6 +9,7 @@ const num1Display = document.querySelector('.firstnum')
 const num2Display = document.querySelector('.secondnum')
 const operatorDisplay = document.querySelector('.operator')
 const equalsKey = document.querySelector('.btnEquals');
+const percentButton = document.querySelector('.btnPercent')
 
 
 // add the first num, and second num
@@ -27,6 +28,11 @@ function multiply(firstnum, secondnum) {
 function divide(firstnum, secondnum) {
   return firstnum / secondnum;
 }
+// return percentage of numbers
+function percentage (firstnum, secondnum) {
+  return (firstnum * secondnum) / 100;
+}
+
 
 // operate on two stored numbers depending on operator I click
 function operate (firstnum, secondnum, operator) {
@@ -46,7 +52,8 @@ function operate (firstnum, secondnum, operator) {
       return "Error: Can't divide by 0"
     }
     return divide(firstnum, secondnum) 
-
+  case '%':
+    return percentage(firstnum, secondnum)  
     
  }
 
@@ -99,7 +106,7 @@ operatorButton.forEach((operator) => {
     // stores the operator pressed and displays it after first number
     firstOperator = operator.innerText;
     displayValue.innerText = firstnum + firstOperator;
-    console.log(firstOperator)
+    
     
  
   })
@@ -112,11 +119,14 @@ equalsKey.addEventListener('click', () => {
   
 
   inputDisplay = operate(firstnum, secondnum, firstOperator)// did not work because the order was wrong. 
+  console.log(typeof inputDisplay)
   displayValue.textContent = parseFloat(inputDisplay.toFixed(2));
-  result = operate(firstnum, secondnum, firstOperator);
+  //result = operate(firstnum, secondnum, firstOperator);
   console.log(inputDisplay)
   
-  
+  firstnum = inputDisplay;
+  secondnum = '';
+  firstOperator = '';
 
   
 })
@@ -159,5 +169,17 @@ decimalButton.addEventListener('click', () => {
   }
 })
 
+// function that listens for percent button
+
+percentButton.addEventListener('click', () => {
+  if (firstnum !== '' && secondnum !== '') {
+    result = operate(firstnum, secondnum, '%'); // Use percentage calculation
+    displayValue.innerText = result;
+    firstnum = result.toString(); // Set result as firstNumber for next operation
+    secondnum = ''; // Reset second number
+    firstOperator = ''; // Clear operator
+    console.log(typeof secondnum)
+  }
+})
 
 
