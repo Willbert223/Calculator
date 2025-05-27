@@ -26,6 +26,9 @@ function multiply(firstnum, secondnum) {
 }
 // divide first and second num.
 function divide(firstnum, secondnum) {
+  if (secondnum === 0) {
+    return "Error: Can't divide by 0"
+    }
   return firstnum / secondnum;
 }
 // return percentage of numbers
@@ -48,9 +51,6 @@ function operate (firstnum, secondnum, operator) {
     return multiply(firstnum, secondnum)
 // if operator is / return divide function
   case '/':
-    if (secondnum === 0) {
-      return "Error: Can't divide by 0"
-    }
     return divide(firstnum, secondnum) 
   case '%':
     return percentage(firstnum, secondnum)  
@@ -68,6 +68,7 @@ let storedNumber = '';
 let firstnum = '';
 let firstOperator = '';
 let secondnum = '';
+let secondOperator = '';
 let result = '';
 let inputDisplay = ''
 displayValue.innerText = 0;
@@ -87,14 +88,18 @@ numberButton.forEach((number) => {
     console.log("secondNumber", secondnum);
     inputDisplay = secondnum.toString();
    }
+   
 
    /*if (firstnum !== '' && secondnum !== '') {
     firstnum = firstOperator, firstnum, secondnum;
     secondnum = '';
     secondnum = (secondnum + clickedNumber)
     inputDisplay = secondnum.toString();
+
    }*/
-   display.innerText = inputDisplay;
+   display.innerText = firstnum + firstOperator + secondnum; // displays all numbers plus operator
+
+
   })
 })
 
@@ -102,10 +107,23 @@ numberButton.forEach((number) => {
 operatorButton.forEach((operator) => {
   operator.addEventListener('click',  function(event) {
 
+if (firstnum === '' && result !== '') {
+  firstnum = result;
+}// fixes result not
+
+   if (secondnum !== '') {
+     inputDisplay = operate(firstnum, secondnum, firstOperator)
+      firstnum = inputDisplay;
+      secondnum = '';
+      
+    } else if (secondnum === ''  && firstOperator !== '') {
+      return;
+      
+    }
     
     // stores the operator pressed and displays it after first number
     firstOperator = operator.innerText;
-    displayValue.innerText = firstnum + firstOperator;
+    displayValue.innerText = firstnum + firstOperator + secondnum;
     
     
  
@@ -116,20 +134,32 @@ operatorButton.forEach((operator) => {
 // funtion that listens for equal button
 equalsKey.addEventListener('click', () => {
   // display the value of added numbers.
+  if (firstnum === '' || firstOperator === '' || secondnum === '') return;
   
-
   inputDisplay = operate(firstnum, secondnum, firstOperator)// did not work because the order was wrong. 
+  result = inputDisplay;
   console.log(typeof inputDisplay)
-  displayValue.textContent = parseFloat(inputDisplay.toFixed(2));
-  //result = operate(firstnum, secondnum, firstOperator);
-  console.log(inputDisplay)
+  if (typeof inputDisplay === 'number') {
+    
+    displayValue.textContent = parseFloat(inputDisplay.toFixed(2));
+  } else {
+    
+    displayValue.textContent = inputDisplay;
+  }
   
-  firstnum = inputDisplay;
+  
+  
+  
+  firstnum = '';
   secondnum = '';
   firstOperator = '';
+ 
+  
 
   
+  
 })
+
 
 // function that listens for clear button click
 
