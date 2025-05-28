@@ -97,7 +97,7 @@ numberButton.forEach((number) => {
     inputDisplay = secondnum.toString();
 
    }*/
-   display.innerText = firstnum + firstOperator + secondnum; // displays all numbers plus operator
+   displayValue.innerText = firstnum + firstOperator + secondnum; // displays all numbers plus operator
 
 
   })
@@ -109,11 +109,11 @@ operatorButton.forEach((operator) => {
 
 if (firstnum === '' && result !== '') {
   firstnum = result;
-}// fixes result not
+} // fixes result not displaying.
 
    if (secondnum !== '') {
      inputDisplay = operate(firstnum, secondnum, firstOperator)
-      firstnum = inputDisplay;
+      firstnum = inputDisplay.toString();
       secondnum = '';
       
     } else if (secondnum === ''  && firstOperator !== '') {
@@ -135,9 +135,14 @@ if (firstnum === '' && result !== '') {
 equalsKey.addEventListener('click', () => {
   // display the value of added numbers.
   if (firstnum === '' || firstOperator === '' || secondnum === '') return;
+
+  // parse both numbers to floats
+  const num1 = parseFloat(firstnum);
+  const num2 = parseFloat(secondnum);
   
-  inputDisplay = operate(firstnum, secondnum, firstOperator)// did not work because the order was wrong. 
+  inputDisplay = operate(num1, num2, firstOperator)// did not work because the order was wrong. 
   result = inputDisplay;
+  
   console.log(typeof inputDisplay)
   if (typeof inputDisplay === 'number') {
     
@@ -166,6 +171,7 @@ equalsKey.addEventListener('click', () => {
 clearButton.addEventListener('click',  (event) => {
   // removes number from display not. They are still stored inside of console.
   firstnum = '';
+  result = ''
   secondnum = '';
   firstOperator = '';
   displayValue.innerText = '0';
@@ -173,23 +179,37 @@ clearButton.addEventListener('click',  (event) => {
 // function that listens for delete button 
 
 deleteButton.addEventListener('click', () => {
-   if (!secondnum) {
-    firstnum = firstnum.toString().slice(0, -1);
-    displayValue.textContent = (firstnum || '0')
-   } else {
-    secondnum = secondnum.toString().slice(0, -1)
-    displayValue.textContent = (secondnum || '0')
-   }
+
+  const displayText = displayValue.innerText;
+
+  if (!displayText || displayText === '0') return;
+
+  const updatedText = displayText.slice(0, -1); // remove last character
+
+  displayValue.innerText = updatedText || '0';
+
+  // Update firstnum, operator, and secondnum based on what's left
+  const operatorMatch = updatedText.match(/[+\-*/%]/);
+  if (operatorMatch) {
+    const operatorIndex = updatedText.indexOf(operatorMatch[0]);
+    firstnum = updatedText.slice(0, operatorIndex);
+    firstOperator = operatorMatch[0];
+    secondnum = updatedText.slice(operatorIndex + 1);
+  } else {
+    firstnum = updatedText;
+    firstOperator = '';
+    secondnum = '';
+  }
 })
 
 
 // fucntion that listens for decimal click allowing only one to appear
 
 decimalButton.addEventListener('click', () => {
-  if (!secondnum) {
+  if (firstOperator === '') /* makes the deciaml not append more then 1*/ {
     if (!firstnum.toString().includes('.')) {
       firstnum += '.';
-      displayValue.textContent = (firstnum + firstOperator);
+      displayValue.textContent = firstnum + firstOperator;
     }
   } else {
     if (!secondnum.toString().includes('.')) {
