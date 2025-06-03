@@ -1,21 +1,82 @@
 
 
+.calculator{
+display: flex;
+    min-height: 95vh;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: azure;
+    overflow: hidden;
+    
+}
+
+#container{
+background-color: rgb(255, 255, 255);
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 80px);
+    display: flex;
+    flex-direction: column;
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgb(47, 47, 47);
+    border-image: initial;
+    border-radius: 4px;
+    gap: 2px;
+    box-shadow: 5px 5px 1px 3px #1a1a1a;
+    padding: 15px;
+}
+
 #display {
-  grid-column: 1 / -1;
-}
-.display {
-  
-  border: 1px solid #4289a7;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background-color: rgb(178, 185, 183);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 5.5em;
+    font-weight: initial;
+    text-shadow: rgb(56, 56, 56) 1.3px 1.3px;
+    grid-column: 1 / -1;
+    margin: 5px;
+border-style: solid;
+border-radius: 10px;
+padding: 5px;
+aspect-ratio: 4/1;
 }
 
+button {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 2px #bdbdbd;
+    flex: 1 0 calc(25% - 10px);
+    transition: all 0.1s ease;
+}
+
+.btnNumber {
+    background-color: violet;
+}
+
+.btnOperator {
+    background-color: orange;
+}
+
+.btnClear {
+    background-color: greenyellow;
+}
+
+.btnDelete {
+    background-color: greenyellow;
+}
+
+.btnPercent {
+    background-color: greenyellow;
+}
+
+.btnDecimal {
+    background-color: violet;
+}
+
+.btnEquals {
+    background-color: orange;
+}

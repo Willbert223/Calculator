@@ -113,7 +113,7 @@ if (firstnum === '' && result !== '') {
 
    if (secondnum !== '') {
      inputDisplay = operate(firstnum, secondnum, firstOperator)
-      firstnum = inputDisplay.toString();
+      firstnum = parseFloat(inputDisplay);
       secondnum = '';
       
     } else if (secondnum === ''  && firstOperator !== '') {
@@ -123,7 +123,7 @@ if (firstnum === '' && result !== '') {
     
     // stores the operator pressed and displays it after first number
     firstOperator = operator.innerText;
-    displayValue.innerText = firstnum + firstOperator + secondnum;
+    displayValue.innerText =  `${firstnum}${firstOperator}${secondnum}`;
     
     
  
@@ -231,5 +231,3 @@ percentButton.addEventListener('click', () => {
     console.log(typeof secondnum)
   }
 })
-
-
