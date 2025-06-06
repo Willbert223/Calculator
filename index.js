@@ -109,6 +109,7 @@ operatorButton.forEach((operator) => {
 
 if (firstnum === '' && result !== '') {
   firstnum = result;
+  //secondnum = '';
 } // fixes result not displaying.
 
    if (secondnum !== '') {
@@ -158,6 +159,7 @@ equalsKey.addEventListener('click', () => {
   firstnum = '';
   secondnum = '';
   firstOperator = '';
+  inputDisplay = ''
  
   
 
